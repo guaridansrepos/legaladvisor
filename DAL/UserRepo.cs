@@ -34,8 +34,8 @@ namespace Advocate_Invoceing.DAL
                 }
                 else
                 {
-                    var p = EncryptModel.Decrypt(u.PasswordHash);
-                    if (request.Password == EncryptModel.Decrypt(u.PasswordHash))
+                    var p = EncryptTool.Decrypt(u.PasswordHash);
+                    if (request.Password == EncryptTool.Decrypt(u.PasswordHash))
                     {
                         lr.statusCode = 1;
                         lr.Message = "success";

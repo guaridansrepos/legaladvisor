@@ -1,0 +1,32 @@
+﻿@model List<Advocate_Invoceing.Models.Entity.EmployeePunch>
+
+@{
+    ViewData["Title"] = "Punch In / Punch Out";
+}
+
+<h3 class="mb-4">Employee Punch In / Out</h3>
+
+<form asp-action="Punch" method="post" class="mb-4">
+    <button type="submit" name="type" value="IN" class="btn btn-success me-2">Punch In</button>
+    <button type="submit" name="type" value="OUT" class="btn btn-danger">Punch Out</button>
+</form>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Punch Type</th>
+            <th>Punch Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model[i].PunchType</td>
+                <td>@Model[i].PunchTime.ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>

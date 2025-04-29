@@ -1,0 +1,92 @@
+﻿@model Advocate_Invoceing.Models.DTO.InvoiceDTO
+
+ 
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>Invoice Details</h4>
+        </div>
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Invoice No:</strong> @Model.InvoiceNumber
+                </div>
+                <div class="col-md-6">
+                    <strong>Client ID:</strong> @Model.ClientId
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Amount:</strong> @Model.Amount.ToString("C")
+                </div>
+                <div class="col-md-6">
+                    <strong>Due Date:</strong> @Model.DueDate?.ToString("dd/MM/yyyy")
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Status:</strong> @Model.Status
+                </div>
+                <div class="col-md-6">
+                    <strong>Created On:</strong> @Model.CreatedOn.ToString("dd/MM/yyyy hh:mm tt")
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>SubTotal:</strong> @Model.SubTotal.ToString("C")
+                </div>
+                <div class="col-md-6">
+                    <strong>GST Percentage:</strong> @Model.GSTPercentage%
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>CGST Amount:</strong> @Model.CGSTAmount.ToString("C")
+                </div>
+                <div class="col-md-6">
+                    <strong>SGST Amount:</strong> @Model.SGSTAmount.ToString("C")
+                </div>
+            </div>
+
+            @* If there are line items, show them in a table *@
+            @if (Model.InvoiceItems != null && Model.InvoiceItems.Any())
+            {
+                <hr />
+                <h5>Invoice Items</h5>
+                <table class="table table-bordered mt-3">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InvoiceItems)
+                        {
+                            <tr>
+                                <td>@item.ItemName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Rate.ToString("C")</td>
+                                <td>@item.TotalAmount.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "Invoice")" class="btn btn-secondary">Back to List</a>
+                <a href="@Url.Action("CreateEdit", "Invoice", new { id = Model.InvoiceId })" class="btn btn-warning">Edit Invoice</a>
+            </div>
+
+        </div>
+    </div>
+</div>

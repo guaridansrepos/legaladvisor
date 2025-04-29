@@ -1,0 +1,72 @@
+﻿@model Advocate_Invoceing.Models.DTO.InvoiceDTO
+
+<div class="card">
+    <div class="card-header">
+        <h5>Invoice Add/Edit</h5>
+    </div>
+    <div class="card-body">
+        <div class="col-md-12">
+            <form method="post" asp-action="CreateEdit" asp-controller="Invoice">
+                <input type="hidden" asp-for="InvoiceId" />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Invoice Number -->
+                        <div class="form-group">
+                            <label for="InvoiceNumber">Invoice Number</label>
+                            <input type="text"
+                                   class="form-control"
+                                   asp-for="InvoiceNumber"
+                                   placeholder="Enter Invoice Number"
+                                   required
+                                   maxlength="50" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Amount -->
+                        <div class="form-group">
+                            <label for="Amount">Amount</label>
+                            <input type="number"
+                                   class="form-control"
+                                   asp-for="Amount"
+                                   placeholder="Enter Amount"
+                                   step="0.01"
+                                   required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Due Date -->
+                        <div class="form-group">
+                            <label for="DueDate">Due Date</label>
+                            <input type="date"
+                                   class="form-control"
+                                   asp-for="DueDate"
+                                   required />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Status -->
+                        <div class="form-group">
+                            <label for="Status">Status</label>
+                            <select class="form-control" asp-for="Status">
+                                <option>Pending</option>
+                                <option>Paid</option>
+                                <option>Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-3">
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

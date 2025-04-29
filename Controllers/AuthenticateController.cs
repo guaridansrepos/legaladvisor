@@ -38,6 +38,7 @@ namespace Advocate_Invoceing.Controllers
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
@@ -78,10 +79,10 @@ namespace Advocate_Invoceing.Controllers
                 // Redirect based on the user type
                 return result.userTypeName switch
                 {
-                    "SuperAdmin" => RedirectToAction("AdminDash", "Home"),
-                    "Admin" => RedirectToAction("AdminDash", "Home"),
-                    "Employee" => RedirectToAction("Index", "Home"),
-                    "HR" => RedirectToAction("Index", "Home"),
+                    //"SuperAdmin" => RedirectToAction("AdminDash", "Home"),
+                    //"Admin" => RedirectToAction("AdminDash", "Home"),
+                    //"Employee" => RedirectToAction("Index", "Home"),
+                    //"HR" => RedirectToAction("Index", "Home"),
                     _ => RedirectToAction("Index", "Home") // Default redirect
                 };
             }

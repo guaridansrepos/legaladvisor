@@ -9,5 +9,6 @@ namespace Advocate_Invoceing.BAL
         Task<ClientEntity> AddClientAsync(ClientEntity client);
         Task<ClientEntity> UpdateClientAsync(ClientEntity client);
         Task<bool> DeleteClientAsync(int id);
+        Task<int> GetActiveClientsAsync();
     }
 }

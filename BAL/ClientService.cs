@@ -16,9 +16,15 @@ namespace Advocate_Invoceing.BAL
         public async Task<List<ClientEntity>> GetAllClientsAsync()
         {
             return await _context.Clients
-                .Where(c => c.IsDeleted != true)
-                .ToListAsync();
+                .Where(c => c.IsDeleted != true) // Filters out clients marked as deleted
+                .ToListAsync(); // Executes the query asynchronously and returns a list of clients
         }
+
+        public async Task<int> GetActiveClientsAsync()
+        {
+            return await _context.Clients.CountAsync(c => c.IsActive == true && c.IsDeleted == false);
+        }
+
 
         public async Task<ClientEntity> GetClientByIdAsync(int id)
         {

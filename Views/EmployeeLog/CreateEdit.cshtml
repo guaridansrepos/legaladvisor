@@ -1,0 +1,26 @@
+﻿@model Advocate_Invoceing.Models.DTO.EmployeeLogDTO
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>@(Model.UserId == 0 ? "Create" : "Edit") Employee Log</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateEdit" method="post">
+                <div class="form-group">
+                    <label for="Action">Action</label>
+                    <input type="text" class="form-control" id="TaskTitle" name="TaskTitle" value="@Model.TaskTitle" required />
+                </div>
+                <div class="form-group">
+                    <label for="ActionDetails">Action Details</label>
+                    <textarea class="form-control" id="TaskDescription" name="TaskDescription" required>@Model.TaskDescription</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="EditedBy">Edited By</label>
+                    <input type="text" class="form-control" id="CreatedBy" name="CreatedBy" value="@Model.CreatedBy" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+</div>

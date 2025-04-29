@@ -1,5 +1,9 @@
 using Advocate_Invoceing.BAL;
+using Advocate_Invoceing.BAL.IService;
+using Advocate_Invoceing.BAL.Service;
 using Advocate_Invoceing.DAL;
+using Advocate_Invoceing.DAL.Interface;
+using Advocate_Invoceing.DAL.Repo;
 using Advocate_Invoceing.Models.Entity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -36,9 +40,11 @@ builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>(
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IUserService, UserService>();
-
-
-
+builder.Services.AddScoped<IEmployeePunchRepo, EmployeePunchRepo>();
+builder.Services.AddScoped<IAdminApprovalRepo, AdminApprovalRepo>();
+builder.Services.AddScoped<IEmployeeLogRepo, EmployeeWorkLogRepo>();
+builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
+ 
 //builder.Services.AddScoped<ILeaveTypeMaster, LeaveTypeMaster>();
 
 

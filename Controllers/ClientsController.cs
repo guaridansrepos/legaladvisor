@@ -29,25 +29,30 @@ namespace Advocate_Invoceing.Controllers
             return View(client);
         }
 
-       
-        public IActionResult Create()
+
+     
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var clients = await _clientService.GetAllClientsAsync();
+            return View(clients); 
         }
 
-       
+        
         [HttpPost]
         public async Task<IActionResult> Create(ClientEntity client)
         {
             if (ModelState.IsValid)
             {
-                await _clientService.AddClientAsync(client);
-                return RedirectToAction(nameof(Index));
+                await _clientService.AddClientAsync(client); 
+                return RedirectToAction(nameof(Index)); 
             }
-            return View(client);
+
+     
+            var clients = await _clientService.GetAllClientsAsync();
+            return View(clients);
         }
 
-       
+
         public async Task<IActionResult> Edit(int id)
         {
             var client = await _clientService.GetClientByIdAsync(id);

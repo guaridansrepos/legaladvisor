@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Advocate_Invoceing.Models.Entity.EmployeePunch>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>Punch History Log</h5>
+        </div>
+        <div class="card-body table-border-style">
+            <div class="table-responsive">
+                <a href="@Url.Action("Index", "Punch")" class="btn btn-primary mb-3">Back to Punch</a>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Punch Type</th>
+                            <th>Punch Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var punch in Model)
+                            {
+                                <tr>
+                                    <td>@punch.PunchId</td>
+                                    <td>@punch.PunchType</td>
+                                    <td>@punch.PunchTime.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                    <td>@(punch.IsActive.HasValue && punch.IsActive.Value ? "Active" : "Inactive")</td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">No punch history available.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
