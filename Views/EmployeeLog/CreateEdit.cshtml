@@ -1,5 +1,40 @@
 ﻿@model Advocate_Invoceing.Models.DTO.EmployeeLogDTO
 
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/site.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#endTime").change(function () {
+            var startTime = $("#startTime").val();
+            var endTime = $("#endTime").val();
+
+            if (startTime && endTime) {
+                var start = new Date("2000-01-01T" + startTime);
+                var end = new Date("2000-01-01T" + endTime);
+
+                var diff = (end - start) / 60000; // Convert milliseconds to minutes
+
+                if (diff >= 0) {
+                    $("#taskTime").val(diff);
+                } else {
+                    alert("End time must be greater than start time!");
+                    $("#taskTime").val("");
+                }
+            }
+        });
+
+        $("#startTime").change(function () {
+            console.log("Start Time (12hr Format):", formatTimeTo12Hour(this.value));
+        });
+
+        $("#endTime").change(function () {
+            console.log("End Time (12hr Format):", formatTimeTo12Hour(this.value));
+        });
+     });
+</script>
+
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
@@ -8,17 +43,27 @@
         <div class="card-body">
             <form asp-action="CreateEdit" method="post">
                 <div class="form-group">
-                    <label for="Action">Action</label>
+                    <label >Action</label>
                     <input type="text" class="form-control" id="TaskTitle" name="TaskTitle" value="@Model.TaskTitle" required />
                 </div>
                 <div class="form-group">
-                    <label for="ActionDetails">Action Details</label>
+                    <label >Action Details</label>
                     <textarea class="form-control" id="TaskDescription" name="TaskDescription" required>@Model.TaskDescription</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="EditedBy">Edited By</label>
-                    <input type="text" class="form-control" id="CreatedBy" name="CreatedBy" value="@Model.CreatedBy" required />
+                    <label class="main-content-label tx-13 tx-medium tx-gray-600">Start Time</label>
+                    <input type="time" id="startTime" class="form-control" />
+                </div> 
+                <div class="form-group">
+                    <label class="main-content-label tx-13 tx-medium tx-gray-600">End Time</label>
+                    <input type="time" id="endTime" class="form-control" />
+                </div> 
+                <div class="form-group">
+                    <label class="main-content-label tx-13 tx-medium tx-gray-600">Time Spent</label>
+                    <input type="number" id="taskTime" class="form-control" value="@Model.TimeSpent" placeholder="Minutes Spent" readonly />
                 </div>
+                  
+                
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>

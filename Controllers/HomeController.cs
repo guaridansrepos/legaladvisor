@@ -43,6 +43,7 @@ namespace Advocate_Invoceing.Controllers
             }
             ViewBag.UserDetails = lr;
             int userId = lr.userId;
+            var username = lr.userName;
 
             // Fetching dashboard data
             var totalInvoices = await _invoiceRepo.GetTotalInvoicesAsync();
@@ -55,9 +56,10 @@ namespace Advocate_Invoceing.Controllers
             ViewBag.PendingBills = pendingBills;
             ViewBag.ActiveClients = activeClients;
             ViewBag.TodaysWorkLogs = todaysWorkLogs;
+			ViewBag.username = username;
 
-            // Get employee punches (optional for logging in/out functionality)
-            var punches = await _punchRepo.GetPunchesByUserIdAsync(userId);
+			// Get employee punches (optional for logging in/out functionality)
+			var punches = await _punchRepo.GetPunchesByUserIdAsync(userId);
 
             return View(punches);
         }
