@@ -44,6 +44,7 @@ builder.Services.AddScoped<IEmployeePunchRepo, EmployeePunchRepo>();
 builder.Services.AddScoped<IAdminApprovalRepo, AdminApprovalRepo>();
 builder.Services.AddScoped<IEmployeeLogRepo, EmployeeWorkLogRepo>();
 builder.Services.AddScoped<IInvoiceRepo, InvoiceRepo>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
  
 //builder.Services.AddScoped<ILeaveTypeMaster, LeaveTypeMaster>();
 

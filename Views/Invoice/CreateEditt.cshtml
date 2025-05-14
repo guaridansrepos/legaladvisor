@@ -1,0 +1,105 @@
+﻿@model Advocate_Invoceing.Models.DTO.InvoiceDTO
+@{
+    ViewBag.Title = "Invoice Add/Edit";
+}
+<div class="card-header">
+    <h5>Create / Edit Invoice</h5>
+</div>
+<div class="card-body">
+    <form asp-action="CreateEditt" method="post">
+        <input type="hidden" asp-for="InvoiceId" />
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ClientId">Client</label>
+                    <select asp-for="ClientId" class="form-control">
+                        <option value="">-- Select Client --</option>
+                        @* Populate dynamically *@
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="InvoiceNumber">Invoice Number</label>
+                    <input asp-for="InvoiceNumber" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Amount">Amount</label>
+                    <input asp-for="Amount" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Tax">Tax</label>
+                    <input asp-for="Tax" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Discount">Discount</label>
+                    <input asp-for="Discount" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="DueDate">Due Date</label>
+                    <input asp-for="DueDate" class="form-control" type="date" />
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-3">
+                <button type="submit" class="btn btn-primary">Submit for Approval</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<hr />
+
+<div class="card">
+    <div class="card-header">
+        <h5>Invoices List</h5>
+    </div>
+    <div class="card-body table-border-style">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Invoice Number</th>
+                        <th>Client</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.InvoiceList as List<Advocate_Invoceing.Models.DTO.InvoiceDTO>)
+                    {
+                        <tr>
+                            <td>@item.InvoiceId</td>
+                            <td>@item.InvoiceNumber</td>
+                            <td>@item.ClientName</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Status</td>
+                            <td>@item.DueDate?.ToShortDateString()</td>
+                            <td>
+                                <a href="@Url.Action("CreateEdit", "Invoice", new { id = item.InvoiceId })" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="@Url.Action("Delete", "Invoice", new { id = item.InvoiceId })" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

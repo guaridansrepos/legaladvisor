@@ -9,9 +9,13 @@ namespace Advocate_Invoceing.DAL.Interface
         Task<InvoiceDTO> GetInvoiceByIdAsync(int id);
         Task<GenericResponse> CreateInvoiceAsync(InvoiceDTO invoice);
         Task<GenericResponse> UpdateInvoiceAsync(InvoiceDTO invoice);
-         Task<int> GetTotalInvoicesAsync();
+        Task<int> GetTotalInvoicesAsync();
         Task<GenericResponse> DeleteInvoiceAsync(int id);
         Task<int> GetPendingBillsAsync();
-    }
+		Task<GenericResponse> CreateInvoiceWithApprovalAsync(InvoiceDTO dto);
+		Task<List<InvoiceDTO>> GetInvoiceListWithClientAsync();
+		Task<InvoiceDTO> GetInvoiceDetailsByIdAsync(int id);
+		Task<GenericResponse> DeleteInvoiceAsyncs(int id);
 
+	}
 }

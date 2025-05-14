@@ -1,7 +1,5 @@
 ﻿@model Advocate_Invoceing.Models.DTO.InvoiceDTO
 
- 
-
 <div class="container mt-4">
     <div class="card">
         <div class="card-header bg-primary text-white">
@@ -20,10 +18,10 @@
 
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <strong>Amount:</strong> @Model.Amount.ToString("C")
+                    <strong>Amount:</strong> @Model.Amount.HasValue ? Model.Amount.Value.ToString("C") : "N/A"
                 </div>
                 <div class="col-md-6">
-                    <strong>Due Date:</strong> @Model.DueDate?.ToString("dd/MM/yyyy")
+                    <strong>Due Date:</strong> @Model.DueDate?.ToString("dd/MM/yyyy") ?? "N/A"
                 </div>
             </div>
 
@@ -32,29 +30,28 @@
                     <strong>Status:</strong> @Model.Status
                 </div>
                 <div class="col-md-6">
-                    <strong>Created On:</strong> @Model.CreatedOn.ToString("dd/MM/yyyy hh:mm tt")
+                    <strong>Created On:</strong> @Model.CreatedOn.HasValue ? Model.CreatedOn.Value.ToString("dd/MM/yyyy hh:mm tt") : "N/A"
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <strong>SubTotal:</strong> @Model.SubTotal.ToString("C")
+                    <strong>SubTotal:</strong> @Model.SubTotal.HasValue ? Model.SubTotal.Value.ToString("C") : "N/A"
                 </div>
                 <div class="col-md-6">
-                    <strong>GST Percentage:</strong> @Model.GSTPercentage%
+                    <strong>GST Percentage:</strong> @Model.GSTPercentage ?? 0
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <strong>CGST Amount:</strong> @Model.CGSTAmount.ToString("C")
+                    <strong>CGST Amount:</strong> @Model.CGSTAmount.HasValue ? Model.CGSTAmount.Value.ToString("C") : "N/A"
                 </div>
                 <div class="col-md-6">
-                    <strong>SGST Amount:</strong> @Model.SGSTAmount.ToString("C")
+                    <strong>SGST Amount:</strong> @Model.SGSTAmount.HasValue ? Model.SGSTAmount.Value.ToString("C") : "N/A"
                 </div>
             </div>
 
-            @* If there are line items, show them in a table *@
             @if (Model.InvoiceItems != null && Model.InvoiceItems.Any())
             {
                 <hr />

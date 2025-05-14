@@ -43,11 +43,11 @@
         <div class="card-body">
             <form asp-action="CreateEdit" method="post">
                 <div class="form-group">
-                    <label >Action</label>
+                    <label>Task Title</label>
                     <input type="text" class="form-control" id="TaskTitle" name="TaskTitle" value="@Model.TaskTitle" required />
                 </div>
                 <div class="form-group">
-                    <label >Action Details</label>
+                    <label>Task Description</label>
                     <textarea class="form-control" id="TaskDescription" name="TaskDescription" required>@Model.TaskDescription</textarea>
                 </div>
                 <div class="form-group">

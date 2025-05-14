@@ -138,9 +138,119 @@ namespace Advocate_Invoceing.DAL.Repo
             };
         }
 
+		public async Task<GenericResponse> CreateInvoiceWithApprovalAsync(InvoiceDTO dto)
+		{
+			var invoice = new Invoice
+			{
+				ClientId = dto.ClientId,
+				Amount = dto.Amount,
+				Tax = dto.Tax,
+				Discount = dto.Discount,
+				SubTotal = dto.SubTotal,
+				GSTPercentage = dto.GSTPercentage,
+				CGSTAmount = dto.CGSTAmount,
+				SGSTAmount = dto.SGSTAmount,
+				InvoiceNumber = dto.InvoiceNumber,
+				InvoiceDate = dto.InvoiceDate,
+				DueDate = dto.DueDate,
+				DSCFilePath = dto.DSCFilePath,
+				CreatedOn = DateTime.Now,
+				CreatedBy = dto.CreatedBy,
+				Status = "PendingApproval",
+				IsActive = false,
+				IsDeleted = false
+			};
+
+			_context.Invoices.Add(invoice);
+			await _context.SaveChangesAsync();
+
+			var approval = new AdminApproval
+			{
+				RelatedEntity = "Invoice",
+				EntityId = invoice.InvoiceId,
+				Status = "Pending",
+				Comment = "",
+				CreatedOn = DateTime.Now,
+				CreatedBy = (int)dto.CreatedBy,
+				IsActive = true,
+				IsDeleted = false
+			};
+
+			_context.AdminApprovals.Add(approval);
+			await _context.SaveChangesAsync();
+
+			return new GenericResponse
+			{
+				message = "Invoice submitted for approval",
+				statuCode = 1,
+				currentId = invoice.InvoiceId
+			};
+		}
+
+    
+		public async Task<List<InvoiceDTO>> GetInvoiceListWithClientAsync()
+		{
+			var query = from inv in _context.Invoices
+						join cli in _context.Clients on inv.ClientId equals cli.ClientId
+						where inv.IsDeleted == false
+						select new InvoiceDTO
+						{
+							InvoiceId = inv.InvoiceId,
+							ClientId = inv.ClientId,
+							ClientName = cli.FullName,
+							Amount = inv.Amount,
+							Status = inv.Status,
+							InvoiceNumber = inv.InvoiceNumber,
+							DueDate = inv.DueDate
+						};
+			return await query.ToListAsync();
+		}
+
+		public async Task<InvoiceDTO> GetInvoiceDetailsByIdAsync(int id)
+		{
+			var query = from inv in _context.Invoices
+						join cli in _context.Clients on inv.ClientId equals cli.ClientId
+						where inv.InvoiceId == id && inv.IsDeleted == false
+						select new InvoiceDTO
+						{
+							InvoiceId = inv.InvoiceId,
+							ClientId = inv.ClientId,
+							ClientName = cli.FullName,
+							Amount = inv.Amount,
+							Tax = inv.Tax,
+							Discount = inv.Discount,
+							SubTotal = inv.SubTotal,
+							GSTPercentage = inv.GSTPercentage,
+							CGSTAmount = inv.CGSTAmount,
+							SGSTAmount = inv.SGSTAmount,
+							InvoiceNumber = inv.InvoiceNumber,
+							DueDate = inv.DueDate,
+							DSCFilePath = inv.DSCFilePath,
+							Status = inv.Status,
+							CreatedOn = inv.CreatedOn,
+							CreatedBy = inv.CreatedBy
+						};
+			return await query.FirstOrDefaultAsync();
+		}
+
+		public async Task<GenericResponse> DeleteInvoiceAsyncs(int id)
+		{
+			var inv = await _context.Invoices.FindAsync(id);
+			if (inv == null)
+			{
+				return new GenericResponse { message = "Invoice not found", statuCode = 0 };
+			}
+
+			inv.IsDeleted = true;
+			_context.Invoices.Update(inv);
+			await _context.SaveChangesAsync();
+
+			return new GenericResponse { message = "Invoice deleted", statuCode = 1, currentId = inv.InvoiceId };
+		}
 
 
-        public async Task<int> GetTotalInvoicesAsync()
+
+		public async Task<int> GetTotalInvoicesAsync()
         {
             return await _context.Invoices.CountAsync();
         }
@@ -151,5 +261,7 @@ namespace Advocate_Invoceing.DAL.Repo
         }
 
 
-    }
+	 
+
+	}
 }

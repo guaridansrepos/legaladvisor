@@ -29,7 +29,8 @@
                                     <td>@invoice.InvoiceId</td>
                                     <td>@invoice.InvoiceNumber</td>
                                     <td>@invoice.ClientName</td>
-                                    <td>@invoice.Amount.ToString("N2")</td>
+                                   
+                                    <td>@invoice.Amount.HasValue ? invoice.Amount.Value.ToString("N2") : "N/A"</td>
                                     <td>@invoice.DueDate?.ToString("dd/MM/yyyy")</td>
                                     <td>@invoice.Status</td>
                                     <td>
